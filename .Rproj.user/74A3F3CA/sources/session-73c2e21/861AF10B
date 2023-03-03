@@ -1,0 +1,32 @@
+{
+    "id": "861AF10B",
+    "path": "~/Progetti/R_test/quartobook/stat_dist.qmd",
+    "project_path": "stat_dist.qmd",
+    "type": "quarto_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": true,
+    "created": 1677342467279.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "rmdVisualMode": "true",
+        "rmdVisualWrapConfigured": "true",
+        "source_window_id": "",
+        "Source": "Source",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "",
+        "cursorPosition": "4,0",
+        "scrollLine": "0",
+        "rmdVisualModeLocation": "2:0",
+        "quartoPreviewFormat": "html"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1677427945,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1677847298870,
+    "read_only": false,
+    "read_only_alternatives": []
+}

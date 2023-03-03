@@ -1,0 +1,26 @@
+{
+  "index.qmd": {
+    "index.html": "40742873"
+  },
+  "intro.qmd": {
+    "intro.html": "4a0122ec"
+  },
+  "summary.qmd": {
+    "summary.html": "841585bb"
+  },
+  "references.qmd": {
+    "references.html": "4d6cd25f"
+  },
+  "desc_stats.qmd": {
+    "desc_stats.html": "b2f50203"
+  },
+  "stat_dist.qmd": {
+    "stat_dist.html": "6826eaae"
+  },
+  "intr_prob.qmd": {
+    "intr_prob.html": "92c05e22"
+  },
+  "r.qmd": {
+    "r.html": "0956c9b7"
+  }
+}

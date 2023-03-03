@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Data handling for biological sciences - 2&nbsp; The Basics of Descriptive Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./stat_dist.html" rel="next">
+<link href="./intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Basics of Descriptive Statistics</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data handling for biological sciences</a> 
+        <div class="sidebar-tools-main">
+    <a href="" title="Download" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-download"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./Data-handling-for-biological-sciences.pdf">
+            <i class="bi bi-bi-file-pdf pe-1"></i>
+          Download PDF
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./Data-handling-for-biological-sciences.epub">
+            <i class="bi bi-bi-journal pe-1"></i>
+          Download ePub
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./desc_stats.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Basics of Descriptive Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./stat_dist.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Data Distributions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intr_prob.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to probability</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Programming in R</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#difference-between-population-and-sample" id="toc-difference-between-population-and-sample" class="nav-link active" data-scroll-target="#difference-between-population-and-sample"><span class="toc-section-number">2.1</span>  Difference between population and sample</a></li>
+  <li><a href="#measures-of-central-tendency" id="toc-measures-of-central-tendency" class="nav-link" data-scroll-target="#measures-of-central-tendency"><span class="toc-section-number">2.2</span>  Measures of Central Tendency</a></li>
+  <li><a href="#measures-of-dispersion" id="toc-measures-of-dispersion" class="nav-link" data-scroll-target="#measures-of-dispersion"><span class="toc-section-number">2.3</span>  Measures of Dispersion</a>
+  <ul class="collapse">
+  <li><a href="#the-range" id="toc-the-range" class="nav-link" data-scroll-target="#the-range"><span class="toc-section-number">2.3.1</span>  The range</a></li>
+  <li><a href="#the-standard-deviation" id="toc-the-standard-deviation" class="nav-link" data-scroll-target="#the-standard-deviation"><span class="toc-section-number">2.3.2</span>  The standard deviation</a></li>
+  <li><a href="#the-interquartile-range" id="toc-the-interquartile-range" class="nav-link" data-scroll-target="#the-interquartile-range"><span class="toc-section-number">2.3.3</span>  <strong>The interquartile range</strong></a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Basics of Descriptive Statistics</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Descriptive Statistics (DS) is a branch of statistics whose purpose is to collect, organize, visualize and analyze data taken from a population. DS is composed of a number of methods and definitions, in order to quantitatively treat data and interpret corresponding results in statistical terms. Furthermore, DS differs from inferential statistics in that it is not based on probability theory.</p>
+<section id="difference-between-population-and-sample" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="difference-between-population-and-sample"><span class="header-section-number">2.1</span> Difference between population and sample</h2>
+<p>A population refers to the entire group of items from which one wants to draw conclusions, while a sample is a specific subset of the entire population from which data is collected. Therefore, the sample size is always smaller than the total population size. In practical terms, the use of a sample is particularly important when the population is large and it is not feasible to analyze every component of it. For instance, in order to determine the voting percentages of each political party, theoretically, each adult would need to be asked about their favorite party. However, this is a complex and almost impossible task, which is why companies that propose polls for voting percentage work with samples, such as exit polls.</p>
+<p>The critical issue is to investigate the conditions under which the prediction is close to the reality, as well as to define what “close” means in this context. Using statistical analysis, it is possible to use sample data to obtain estimates or test hypotheses about population data. Ideally, when the sample size is similar to the population size, the results can be estimated reliably, since the sample is necessarily a good representation of the population. However, in most cases, the population is only a theoretical concept, and it is not feasible to work with it. Therefore, it is necessary to choose a criterion to appropriately select the working sample in such a way that it is as representative as possible of the population. The number of objects/subjects that should be included in a sample depends on multiple factors, such as the size and variability of the population or the purpose of the analysis.</p>
+<p>There are two types of approaches for sampling population data to obtain a suitable sample: (i) probability sampling methods and (ii) non-probability sampling methods.</p>
+<p><strong>Probability sampling methods</strong> Probability sampling means that each element of the population can be selected. Typically this is the best method if you want to produce results that are representative of the whole population. There are four main types of probability sample, below all these will be briefly discuss.</p>
+<ul>
+<li><p><u>Simple random sampling</u> each element of the population has the same probability of being selected for the definition of the sample. Therefore, the whole population can be subject to random extraction. A useful tool, in computational terms, is the random number generator (see next example in code R).</p></li>
+<li><p><u>Systematic sampling</u> the basic idea is to imagine the population dataset as a list and select the elements of the sample with a specific regularity (considering fixed steps). Obviously, this method is very similar to the previous one if the dataset is uniform. On the contrary, if the population dataset has hidden patters, the sample risks being out of balance with the population.</p></li>
+<li><p><u>Stratified sampling</u> In this case, the data is stratified (subpopulation groups are created from the population) in such a way that each group is well represented in the population. At this point, for the construction of the sample, members can be randomly selected from each sample in order to maintain the proportion with the initial population.</p></li>
+<li><p><u>Cluster sampling</u> consists in dividing the population into a certain number of groups, which are obtained thanks to a clustering analysis (we will see this in the next chapters). Each subgroup should have similar characteristics to the entire sample, allowing us to randomly sample entire subgroups selections.</p></li>
+</ul>
+<p><strong>Non-Probability sampling methods</strong> In a non-probability sample, members belonging to the sample are selected based on non-random criteria, meaning that not every individual has a chance of being included. This type of sample is easier and cheaper to access, but it has a higher risk of sampling bias. Also in this case there are four different kind of non probability sampling approaches.</p>
+<ul>
+<li><p><u>A convenience sample</u> is simply made up of subjects/objects that are more accessible to the researcher. This is typically a first exploratory approach, which is simple and inexpensive, which can be useful for initial data collection. However, the most important limitation is that there is no way to state whether the sample is representative of the population and so, in principle, it cannot produce generalizable results.</p></li>
+<li><p><u>Voluntary response sampling</u> is a method that refers to all those data that derive from voluntary sharing. One common bias is self-selection bias, where individuals who choose to participate in the study may be different from those who choose not to participate, leading to a non-representative sample. Additionally, voluntary response sampling may attract individuals with extreme opinions or experiences, which can also lead to biased results.</p></li>
+<li><p><u>Purposive sampling</u> is a type of sampling, also known as judgment sampling, which involves the use of the researcher’s experience, given that the sample is selected in a specific way considering a series of constraints useful for the purposes of the research. Purposive sampling is used in statistics where the researcher deliberately chooses individuals or units to be included in the sample based on a specific purpose or criterion. In this method, the researcher selects participants who are believed to be most appropriate or relevant for the research question, rather than selecting them randomly.</p></li>
+<li><p><u>Snowball sampling</u> is characteristic for samples made up of people. If the population is difficult to access, snowball sampling can be used to engage participants via other participants (via a first neighbors selection criterion).</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In the following R code, practical application for both </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># simple random sampling and systematic sampling is reported.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>size_pop <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>size_samp <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># defining the population randomly</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>pop <span class="ot">&lt;-</span> <span class="fu">runif</span>(size_pop, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple random sampling</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>samp_cont <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">length</span>(pop),size_samp)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>samp <span class="ot">&lt;-</span> pop[samp_cont]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(pop), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">main=</span><span class="st">""</span>, <span class="at">xlab=</span><span class="st">""</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">new=</span>T)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(samp), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="at">col=</span><span class="st">"red"</span>, <span class="at">main=</span><span class="st">""</span>, <span class="at">xlab=</span><span class="st">""</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Systematic sampling</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>samp_cont <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> size_pop, <span class="at">by =</span> <span class="dv">10</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>samp <span class="ot">&lt;-</span> pop[samp_cont]</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(pop), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">main=</span><span class="st">""</span>, <span class="at">xlab=</span><span class="st">""</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">new=</span>T)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(samp), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="at">col=</span><span class="st">"red"</span>, <span class="at">main=</span><span class="st">""</span>, <span class="at">xlab=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Methods: <code>ggplot2</code> function of R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>ggplot2</code> is a powerful data visualization function in R that allows you to create a wide range of high-quality plots for exploring and visualizing your data. The function is part of the <code>ggplot2</code> package, which allows to add multiple layers to a given plot to create complex visualizations.</p>
+<p>It is possible to use <code>ggplot2</code> to create a wide range of plots, including scatter plots, bar plots, line plots, histograms, density plots, and more. The function works by defining the data you want to visualize, mapping variables to aesthetic properties such as color, size, and shape, and adding geometric objects such as points, lines, and bars to your plot. You can also customize your plot further by adding labels, legends, titles, and themes. Overall, ggplot is a versatile and flexible function that can be used to explore and communicate data in a clear and compelling way.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In the following R code, practical application for both </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># simple random sampling and systematic sampling is reported </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># by using ggplot2 function for the visualization.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>size_pop <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>size_samp <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># defining the population randomly</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>pop <span class="ot">&lt;-</span> <span class="fu">runif</span>(size_pop, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple random sampling</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>samp_cont <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">length</span>(pop), size_samp)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>samp <span class="ot">&lt;-</span> pop[samp_cont]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>df_sampling <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> <span class="fu">c</span>(pop, samp),</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"pop"</span>, <span class="fu">length</span>(pop)), <span class="fu">rep</span>(<span class="st">'samp'</span>, <span class="fu">length</span>(samp)))</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_sampling) <span class="sc">+</span> </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(values, <span class="at">color =</span> type, <span class="at">fill =</span> type), <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"steelblue4"</span>, <span class="st">"firebrick2"</span>)) <span class="sc">+</span> </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"steelblue4"</span>, <span class="st">"firebrick2"</span>)) <span class="sc">+</span> </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="measures-of-central-tendency" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="measures-of-central-tendency"><span class="header-section-number">2.2</span> Measures of Central Tendency</h2>
+<p>In this section, various measures of centrality will be discussed. Undoubtedly, one of the most valuable techniques for summarizing data is to determine the average of a given set of data, which is a measure that describes the centrality of the dataset, and is commonly referred to as central tendency. There exist three distinct methods for describing the central location of a numerical dataset, namely the mean, median, and mode.</p>
+<ul>
+<li><p><u>The mean:</u> is the sum of all numbers belonging to the data set, divided by the number of all elements. More formally, we can define the mean as follows:</p>
+<p><span class="math display">\[
+\bar{x} = \frac{\sum_{i=1}^n x_i}{n}
+\]</span></p>
+<p>where <span class="math inline">\(n\)</span> is the number of the items belonging to the data set and <span class="math inline">\(x_{i}\)</span> is the i-th item of the data set.</p>
+<p>We need to make an important clarification. With the letter <span class="math inline">\(\bar{x}\)</span> we indicate the sample mean, given that <span class="math inline">\(n\)</span> is the number of items selected for defining the sample. If instead we refer to the population mean, we should use the letter <span class="math inline">\(\mu\)</span>. In this case the number of elements of the population are typically indicated with <span class="math inline">\(N\)</span>.</p></li>
+<li><p><u>The median:</u> is the middle item in a data set arranged in ascending/descending order.</p></li>
+<li><p><u>The mode:</u> is the highest occurring observation.</p></li>
+</ul>
+</section>
+<section id="measures-of-dispersion" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="measures-of-dispersion"><span class="header-section-number">2.3</span> Measures of Dispersion</h2>
+<p>The study of measures of dispersion is of paramount importance in statistics as they provide crucial information regarding the extent of variability or spread within a given dataset. While measures of central tendency offer insight into the typical values of the dataset, measures of dispersion such as range, variance, and standard deviation provide information concerning the deviation of the data from the central tendency. A comprehensive understanding of the dispersion of the data is critical as it allows for more robust interpretation of statistical analysis results, facilitates identification of potential outliers or influential data points, and enables accurate assessment of the validity of statistical conclusions. In essence, measures of dispersion enable a more nuanced and comprehensive comprehension of the underlying phenomena. As shown below, we consider different definition of dispersion.</p>
+<section id="the-range" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="the-range"><span class="header-section-number">2.3.1</span> The range</h3>
+<p>Range is probably the simplest measure of dispersion in a data set. This is trivially calculated as the difference between the maximum value and the minimum value. It is a simple measure of spread that can provide a quick overview of the extent of variability within a dataset.</p>
+<p>For example, suppose you have a dataset consisting of the following numbers: 4, 6, 7, 8, 9, 11. The maximum value in this dataset is 11, and the minimum value is 4. Therefore, the range of this dataset is calculated as follows:</p>
+<p><span class="math display">\[
+range = value_{max} - value_{min} = 11 - 4 = 7
+\]</span></p>
+<p>So, the range of this dataset is 7. This means that the values in the dataset are spread out over a range of 7 units.</p>
+<p>A more biological example may be the calculation of all contacts of a giver protein. Indeed, the range of interactions between atoms in a protein is highly dependent on the specific composition and structure of the protein, and the range of interaction distances can vary greatly between different proteins. Thus, by computing the range of interaction distances for a given protein, one can gain a more complete understanding of its unique structural and functional characteristics.</p>
+</section>
+<section id="the-standard-deviation" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="the-standard-deviation"><span class="header-section-number">2.3.2</span> The standard deviation</h3>
+<p>The standard deviation is a widely utilized measure of dispersion in data analysis, and it provides a quantification of how far data points deviate from the mean. In the context of this lecture series, which focuses on biological examples, we will examine the structural properties of proteins with particular emphasis. For illustrative purposes, we will focus on the myoglobin protein as an example.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Biological focus: Myoglobin
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Myoglobin is an iron- and oxygen-binding protein present in the cardiac and skeletal muscle tissue. It is should be remembered that myoglobin was the first protein whose structure was experimentally solved with the x-ray technique. In order to analyze the three-dimensional structure of this protein, we consider the pdb code: 1MBN. The structure is made up of 153 residues, for a total of 1216 atoms.</p>
+</div>
+</div>
+<p>As also shown in the R script below, we calculate the mean and standard deviation of the following set of numbers: the number of times each of the 20 amino acids appears in myoglobin sequence.</p>
+
+<style scoped=""> table { font-size: 10px; text-align: center; } td, th {padding: 4px 0 !important; } col { width: 5% !important; }</style>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ALA</th>
+<th>ARG</th>
+<th>ASN</th>
+<th>ASP</th>
+<th>GLN</th>
+<th>GLU</th>
+<th>GLY</th>
+<th>HIS</th>
+<th>ILE</th>
+<th>LEU</th>
+<th>LYS</th>
+<th>MET</th>
+<th>PHE</th>
+<th>PRO</th>
+<th>SER</th>
+<th>THR</th>
+<th>TRP</th>
+<th>TYR</th>
+<th>VAL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>17</td>
+<td>4</td>
+<td>1</td>
+<td>7</td>
+<td>5</td>
+<td>14</td>
+<td>11</td>
+<td>12</td>
+<td>9</td>
+<td>18</td>
+<td>19</td>
+<td>2</td>
+<td>6</td>
+<td>4</td>
+<td>6</td>
+<td>5</td>
+<td>2</td>
+<td>3</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>Notably, the total sum of frequencies for each amino acid occurrence in myoglobin is 153, corresponding precisely to the total number of residues comprising the protein.</p>
+<p>The average number of times each amino acid appears in the protein sequence is: <span class="math inline">\(\bar{x} = 8.05\)</span>.</p>
+<p>In order to determine the deviation of each value in a given dataset from the mean, one can calculate the difference between the mean and each individual value. This computation is shown in the second row of the table presented below.</p>
+
+<style scoped=""> table { font-size: 10px; text-align: center; } td, th {padding: 4px 0 !important; } col { width: 5% !important; }</style>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ALA</th>
+<th>ARG</th>
+<th>ASN</th>
+<th>ASP</th>
+<th>GLN</th>
+<th>GLU</th>
+<th>GLY</th>
+<th>HIS</th>
+<th>ILE</th>
+<th>LEU</th>
+<th>LYS</th>
+<th>MET</th>
+<th>PHE</th>
+<th>PRO</th>
+<th>SER</th>
+<th>THR</th>
+<th>TRP</th>
+<th>TYR</th>
+<th>VAL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>17</td>
+<td>4</td>
+<td>1</td>
+<td>7</td>
+<td>5</td>
+<td>14</td>
+<td>11</td>
+<td>12</td>
+<td>9</td>
+<td>18</td>
+<td>19</td>
+<td>2</td>
+<td>6</td>
+<td>4</td>
+<td>6</td>
+<td>5</td>
+<td>2</td>
+<td>3</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>8.95</td>
+<td>-4.05</td>
+<td>-7.05</td>
+<td>-1.05</td>
+<td>-3.05</td>
+<td>5.95</td>
+<td>2.95</td>
+<td>3.95</td>
+<td>0.95</td>
+<td>9.95</td>
+<td>10.95</td>
+<td>-6.05</td>
+<td>-2.05</td>
+<td>-4.05</td>
+<td>-2.05</td>
+<td>-3.05</td>
+<td>-6.05</td>
+<td>-5.05</td>
+<td>-0.05</td>
+</tr>
+</tbody>
+</table>
+<p>When an amino acid appears more frequently than the average of the other amino acids, it is said to have positive dispersion; if it appears less frequently, it has negative dispersion. However, the previous definition of dispersion is not a reliable indicator, as the sum of all dispersion terms is zero by definition. To address this issue, we can calculate the squared value of each dispersion term, as presented in the third row of the table below.</p>
+
+<style scoped=""> table { font-size: 10px; text-align: center; } td, th {padding: 4px 0 !important; } col { width: 5% !important; }</style>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ALA</th>
+<th>ARG</th>
+<th>ASN</th>
+<th>ASP</th>
+<th>GLN</th>
+<th>GLU</th>
+<th>GLY</th>
+<th>HIS</th>
+<th>ILE</th>
+<th>LEU</th>
+<th>LYS</th>
+<th>MET</th>
+<th>PHE</th>
+<th>PRO</th>
+<th>SER</th>
+<th>THR</th>
+<th>TRP</th>
+<th>TYR</th>
+<th>VAL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>17</td>
+<td>4</td>
+<td>1</td>
+<td>7</td>
+<td>5</td>
+<td>14</td>
+<td>11</td>
+<td>12</td>
+<td>9</td>
+<td>18</td>
+<td>19</td>
+<td>2</td>
+<td>6</td>
+<td>4</td>
+<td>6</td>
+<td>5</td>
+<td>2</td>
+<td>3</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>8.95</td>
+<td>-4.05</td>
+<td>-7.05</td>
+<td>-1.05</td>
+<td>-3.05</td>
+<td>5.95</td>
+<td>2.95</td>
+<td>3.95</td>
+<td>0.95</td>
+<td>9.95</td>
+<td>10.95</td>
+<td>-6.05</td>
+<td>-2.05</td>
+<td>-4.05</td>
+<td>-2.05</td>
+<td>-3.05</td>
+<td>-6.05</td>
+<td>-5.05</td>
+<td>-0.05</td>
+</tr>
+<tr class="odd">
+<td>80.06</td>
+<td>16.42</td>
+<td>49.74</td>
+<td>1.11</td>
+<td>9.32</td>
+<td>35.37</td>
+<td>8.69</td>
+<td>15.58</td>
+<td>0.90</td>
+<td>98.95</td>
+<td>119.84</td>
+<td>36.63</td>
+<td>4.21</td>
+<td>16.42</td>
+<td>4.21</td>
+<td>9.32</td>
+<td>36.63</td>
+<td>25.53</td>
+<td>0.00</td>
+</tr>
+</tbody>
+</table>
+<p>We define <strong>variance</strong> as the mean of these square deviations. More formally, we define the variance as follows:</p>
+<p><span class="math display">\[
+\sigma^2 = \frac{\sum_{i=1}^n (x_i - \bar{x})^2}{n}
+\]</span></p>
+<p>In the case of our example, the variance is:</p>
+<p><span class="math display">\[
+\sigma^2 = \frac{80.06 + 16.42 + 49.74 + … + 36.63 + 25.53 + 0.00}{19} = 29.94
+\]</span></p>
+<p>The disadvantage of the variance descriptor is that we will have the unit of measure squared, while the mean has the same unit of measure of the individual components of the data set. Therefore, an advantageous possibility is to define the standard deviation:</p>
+<p><span class="math display">\[
+\sigma = \sqrt{variance} = \sqrt{29.94} = 5.38
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In the following R code, mean, variance and standard deviation </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for amino acid occurrence of the myoglobin protein are calculated.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bio3d)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># importing pdb </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>pdb_aus <span class="ot">&lt;-</span> <span class="fu">read.pdb</span>(<span class="st">"1MBN"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>freq_aa <span class="ot">&lt;-</span> <span class="fu">table</span>(pdb_aus<span class="sc">$</span>seqres)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># sequence length control</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>length_control <span class="ot">&lt;-</span> <span class="fu">sum</span>(freq_aa)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(length_control)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># mean calculation</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>s_aus <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(freq_aa)){</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  s_aus <span class="ot">&lt;-</span> s_aus <span class="sc">+</span> freq_aa[i]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>m_value_1 <span class="ot">&lt;-</span> s_aus<span class="sc">/</span><span class="fu">length</span>(freq_aa)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># using R function for mean calculation</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>m_value_2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(freq_aa)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># dispersion</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>dispersion <span class="ot">&lt;-</span> freq_aa <span class="sc">-</span> m_value_2</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dispersion)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co"># square of the deviations</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>dispersion_sq <span class="ot">&lt;-</span> dispersion<span class="sc">**</span><span class="dv">2</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>variance_1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(dispersion_sq)<span class="sc">/</span><span class="fu">length</span>(dispersion_sq)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>variance_2 <span class="ot">&lt;-</span> <span class="fu">var</span>(freq_aa)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co"># standard deviation</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>sdev_final <span class="ot">&lt;-</span> <span class="fu">sd</span>(freq_aa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Methods: bio3d R package
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Bio3D is a powerful R package designed for the analysis and visualization of biomolecular structures and sequence data. It provides a comprehensive suite of functions for the analysis and manipulation of protein and nucleic acid structures, including tools for protein structure alignment, superimposition, and analysis of structural dynamics. Additionally, Bio3D offers a range of functions for the analysis of protein and nucleic acid sequences, including tools for sequence alignment, phylogenetic analysis, and sequence motif discovery. Bio3D also provides a range of tools for the visualization of biomolecular structures and data, including functions for creating high-quality publication-ready plots and 3D visualizations. Overall, Bio3D is a versatile and powerful tool for the analysis and visualization of biomolecular data, and is widely used in the fields of structural biology, bioinformatics, and biophysics.</p>
+</div>
+</div>
+</section>
+<section id="the-interquartile-range" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="the-interquartile-range"><span class="header-section-number">2.3.3</span> <strong>The interquartile range</strong></h3>
+<p>The interquartile range is a statistical measure of dispersion commonly used in data analysis when the median is used as the measure of central tendency. To fully grasp the concept of the interquartile range coefficient, it is important to first understand the quartile concept. Quartiles are widely used in statistical science to divide observations into four defined intervals. To determine quartiles, the data must be ordered either in ascending or descending order, in accordance with the definition of the median as the middle value of an ordered set of numbers. This enables the median to divide the data set into two equal parts, where half of the data lies below and above the median.</p>
+<p>The quartiles breaks down the data, once sorted, into 4 groups so that <span class="math inline">\(25 \%\)</span> of the data are less than the lower quartile (<span class="math inline">\(Q_{1}\)</span>), <span class="math inline">\(50 \%\)</span> are less than the median (<span class="math inline">\(Q_{1}\)</span> and <span class="math inline">\(Q_{2}\)</span>), and <span class="math inline">\(75 \%\)</span> are less than the last value (<span class="math inline">\(Q_{1}\)</span>, <span class="math inline">\(Q_{2}\)</span> and <span class="math inline">\(Q_{3}\)</span>). All elements of the data set greater than the last value, belong to the fourth quartile, which is made up of <span class="math inline">\(25 \%\)</span> of the data with the highest values (remember that the data is sorted).</p>
+<p>In other words, quartiles in statistics are values that divide a set of data into four equal parts, with each part containing an equal number of data points. There are three quartiles: <span class="math inline">\(Q1\)</span>, <span class="math inline">\(Q2\)</span> (also known as the median), and <span class="math inline">\(Q3\)</span>. <span class="math inline">\(Q2\)</span> is the middle value of the data set, separating the lower half from the upper half. <span class="math inline">\(Q1\)</span> is the value separating the lowest <span class="math inline">\(25\%\)</span> of the data from the remaining <span class="math inline">\(75\%\)</span>, and <span class="math inline">\(Q3\)</span> is the value separating the lowest <span class="math inline">\(75\%\)</span> of the data from the remaining <span class="math inline">\(25\%\)</span>.</p>
+<p>Note that to divide the dataset into 4 parts we need 3 threshold values.</p>
+<p>The interquartile range (IQR), which is the measure of dispersion discussed in these notes, encompasses both the second and third quartiles, thereby representing the central <span class="math inline">\(50\%\)</span> of the dataset. More specifically, the interquartile range of a set of variables is calculated as the difference between the upper and lower quartiles (the values between <span class="math inline">\(Q_{1}\)</span> and <span class="math inline">\(Q_{2}\)</span>). It is a measure of the spread in value of the central part of the data.</p>
+<p>Quartiles can be valuable measures of both central tendency and dispersion, offering valuable insights into the shape and range of a distribution.</p>
+<p><span class="math display">\[
+IQR = UpperQuartile - LowerQuartile
+\]</span></p>
+<p>Also, if you want to get the quartile deviation coefficient (QDC), you should divide IQR index by the sum of the two quartiles.</p>
+<p><span class="math display">\[
+QDC = \frac{UpperQuartile - LowerQuartile}{UpperQuartile + LowerQuartile} = \frac{Q_{3} - Q_{1}}{Q_{3} + Q_{1}}
+\]</span></p>
+<p>To determine quartiles for a dataset, we need to consider whether the number of elements is odd or even. When the number of data points is odd, the median is the central value of the sorted data, and we can choose whether to include (using the inclusive method) or exclude (using the exclusive method) the median. In contrast, when the number of data points is even, we must use the mean of the two middle values as the median.</p>
+<p>To further illustrate the concept of quartiles, we will apply these theoretical principles to another example of biochemical interest.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Biological focus: FMRP (Fragile X Mental Retardation Protein)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>FMRP is a widely expressed RNA-binding protein which play a crucial role for proper synaptic plasticity and architecture, which is critical for normal neural development and function.</p>
+<p>It is encoded by the FMR1 human gene (FMRP translational regulator 1) and expressed in the brain and other tissues. Mutations or loss of FMRP function can lead to Fragile X syndrome, which is a genetic disorder that is the leading cause of inherited intellectual disability and autism spectrum disorders. FMRP is involved in the regulation of protein synthesis at synapses, and is thought to play a key role in the formation and maintenance of neural circuits in the brain.</p>
+</div>
+</div>
+<p>In this particular biological example, we aim to analyze the distribution of B-factor values for each residue in the N-terminal domain of the FMRP protein. The B-factor, also known as the temperature factor, is a measure of the mobility of atoms within a protein crystal. It reflects the root-mean-square amplitude of atomic oscillation around their equilibrium positions, and is reported in the PDB file of a protein.</p>
+<p>In essence, the B-factor indicates the level of atomic fluctuations in a crystal structure, even at low temperatures. Highly mobile regions of a protein tend to have higher B-factors, whereas more stable regions have lower B-factors.</p>
+<p>The following R script calculates the interquartile range (IQR) as a measure of dispersion for the distribution of B-factor values of the c-alpha atoms.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In the following R code the interquatile range (IQR) </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for beta factor values of FMRP N-terminal domain is calculated.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bio3d)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>pdb_aus <span class="ot">&lt;-</span> <span class="fu">read.pdb</span>(<span class="st">"4qvz"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>df_coord <span class="ot">&lt;-</span> pdb_aus<span class="sc">$</span>atom</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting only c-alpha atoms</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>df_coord_ca <span class="ot">&lt;-</span> df_coord[df_coord<span class="sc">$</span>elety<span class="sc">==</span><span class="st">"CA"</span>,]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of c-aplha (or number of residues)</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(df_coord_ca)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Beta factor</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>b_order <span class="ot">&lt;-</span> <span class="fu">sort</span>(df_coord_ca<span class="sc">$</span>b)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>even_odd_control <span class="ot">&lt;-</span> <span class="fu">length</span>(b_order) <span class="sc">%%</span> <span class="dv">2</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># even-numbered data set condition</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(even_odd_control <span class="sc">==</span> <span class="dv">0</span>){</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  median <span class="ot">&lt;-</span> <span class="fu">mean</span>(b_order[(<span class="fu">length</span>(b_order)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">:</span>((<span class="fu">length</span>(b_order)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">+</span><span class="dv">1</span>)])</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  q1 <span class="ot">&lt;-</span> b_order[<span class="fu">round</span>((<span class="fu">length</span>(b_order)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span>)]</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  q3 <span class="ot">&lt;-</span> b_order[((<span class="fu">length</span>(b_order)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">+</span><span class="dv">1</span>) <span class="sc">+</span> q1]</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># interquartile range</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  IQR <span class="ot">&lt;-</span> q3<span class="sc">-</span>q1</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(IQR)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># standard deviation</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  sdev <span class="ot">&lt;-</span> <span class="fu">sd</span>(b_order)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(sdev)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Comparison of active state (pdb code: 1FMK) and inactive state (pdb code: 2SRC) of the c-Src kinase. To this end:</p>
+<ol type="1">
+<li><p>Calculate for both structures the mean and the standard deviation of all distances among charged residues (CRs). Likewise calculate the mean and the standard deviation of all distances among uncharged residues (URs).</p></li>
+<li><p>Compare the CR-CR distance matrix (called <span class="math inline">\(Mat_{CR}\)</span>) with UR-UR distance matrix (called <span class="math inline">\(Mat_{UR}\)</span>) by computing a new matrix defined as the distance in percent:</p>
+<p><span class="math display">\[
+PercDiffMat = \frac{(Mat_{UR} - Mat_{CR})}{Mat_{CR}}
+\]</span></p></li>
+<li><p>Discuss the results obtained.</p></li>
+</ol>
+<p><u>Additional Information</u></p>
+<ul>
+<li><p>positively charged amino acids: Lys, Arg and His.</p></li>
+<li><p>negatively charged amino acids: Asp and Glu.</p></li>
+<li><p>polar amino acids: Ser, Thr, Tyr, Asn and Gln.</p></li>
+<li><p>non-polar amino acids: Gly, Ala, Val, Cys, Pro, Leu, Ile, Met, Trp and Phe.</p></li>
+</ul>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./stat_dist.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Data Distributions</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,13 @@
+# Programming in R
+
+Some basic concepts of programming in R are introduced below. In @sec-R there is a brief description of R and its strengths in data analysis. The @sec-dataStructure discusses the basic data structures and how they are organized. The @sec-dataManipulation focuses on data manipulation. Finally, @sec-dataRepresentation is devoted to data representation.
+
+Each topic is enriched by examples often developed in several different approaches. This can help in real problems in choosing the most congenial way.
+
+## Why R? {#sec-R}
+
+## Data structures {#sec-dataStructure}
+
+## Data manipulation {#sec-dataManipulation}
+
+## Data representation {#sec-dataRepresentation}

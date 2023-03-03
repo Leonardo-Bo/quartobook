@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Data handling for biological sciences - 3&nbsp; Statistical Data Distributions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./intr_prob.html" rel="next">
+<link href="./desc_stats.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Data Distributions</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data handling for biological sciences</a> 
+        <div class="sidebar-tools-main">
+    <a href="" title="Download" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-download"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./Data-handling-for-biological-sciences.pdf">
+            <i class="bi bi-bi-file-pdf pe-1"></i>
+          Download PDF
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./Data-handling-for-biological-sciences.epub">
+            <i class="bi bi-bi-journal pe-1"></i>
+          Download ePub
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./desc_stats.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Basics of Descriptive Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./stat_dist.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Data Distributions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intr_prob.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to probability</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#absolute-and-relative-frequencies" id="toc-absolute-and-relative-frequencies" class="nav-link active" data-scroll-target="#absolute-and-relative-frequencies"><span class="toc-section-number">3.1</span>  Absolute and relative frequencies</a></li>
+  <li><a href="#histograms" id="toc-histograms" class="nav-link" data-scroll-target="#histograms"><span class="toc-section-number">3.2</span>  Histograms</a>
+  <ul class="collapse">
+  <li><a href="#interpretation-of-the-histogram" id="toc-interpretation-of-the-histogram" class="nav-link" data-scroll-target="#interpretation-of-the-histogram"><span class="toc-section-number">3.2.1</span>  Interpretation of the histogram</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Data Distributions</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>To better interpret the data, we need to analyze the data by considering other properties besides the centrality trend and dispersion indices. A widely used approach is to analyze the distribution of data, also to compare data sets with each other. In the following sections this aspect will be discussed.</p>
+<section id="absolute-and-relative-frequencies" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="absolute-and-relative-frequencies"><span class="header-section-number">3.1</span> Absolute and relative frequencies</h2>
+<p>In statistics, the frequency of a given event is the number of times the specific event occurred. In this first part of the section, we will distinguish between relative frequency and absolute frequency.</p>
+<p><strong>Absolute frequency</strong></p>
+<p>The absolute frequency in simply the number of times that a value appears. Therefore, the sum of all absolute frequencies is the total number of data.</p>
+<p><span class="math display">\[
+f_{1} + f_{2} + f_{3} + … + f_{n} = N
+\]</span></p>
+<p>In a more compact way:</p>
+<p><span class="math display">\[
+\sum_{i=1}^n f_i = N
+\]</span></p>
+<p><strong>Relative frequency</strong></p>
+<p>The relative frequency is obtained by dividing the absolute frequencies by the total number of data. Therefore, the sum of all relative frequencies is equal to 1. More formally:</p>
+<p><span class="math display">\[
+n_i = \frac{f_i}{N}
+\]</span></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Biological focus: Monoclonal antibody
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The monoclonal antibodies are a class of proteins designed in the laboratory in order to be able to bind specific targets. There are many types of monoclonal antibodies, but their common feature is that they can bind only one antigen. Monoclonal antibodies are often used in the diagnosis and treatment of many diseases, including some types of cancer.</p>
+<p>As an example, we focus our attention on the monoclonal antibody for the influenza virus. More specifically, the crystal structure of the complex between neuraminidase from influenza virus (subtype N9 and isolated from an avian source) and the antigen-binding fragment (Fab) of monoclonal antibody NC41 has been refined (pdb code: 1NCA).</p>
+</div>
+</div>
+<p>To better elucidate both the absolute and relative frequency concept, we analyze a specific biological problem. Here, the analysis of the contacts is performed for the case of a specific monoclonal antibody, which has been designed for the neuraminidase from influenza virus (pdb code: 1NCA). To this end, we define two residues in contact if the distance between their c-alpha atoms have a distance less than <span class="math inline">\(12 Å\)</span>.</p>
+<p>First of all, it is useful to describe the organization of the pdb file, which contains the information relating to the three-dimensional coordinates (x, y, z) of each atom of the protein.</p>
+<p>Below, we report the first rows of the <em>1nca</em> pdb file corresponding to the first c-alpha atoms of the protein.</p>
+<p><small style="font-size: 12px;"></small></p><small style="font-size: 12px;">
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 3%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">type</th>
+<th style="text-align: right;">eleno</th>
+<th style="text-align: left;">elety</th>
+<th style="text-align: left;">alt</th>
+<th style="text-align: left;">resid</th>
+<th style="text-align: left;">chain</th>
+<th style="text-align: right;">resno</th>
+<th style="text-align: left;">insert</th>
+<th style="text-align: right;">x</th>
+<th style="text-align: right;">y</th>
+<th style="text-align: right;">z</th>
+<th style="text-align: right;">o</th>
+<th style="text-align: right;">b</th>
+<th style="text-align: left;">segid</th>
+<th style="text-align: left;">elesy</th>
+<th style="text-align: left;">charge</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ATOM</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">ILE</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">72.652</td>
+<td style="text-align: right;">8.334</td>
+<td style="text-align: right;">153.945</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">50.23</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATOM</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">CA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">ILE</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">72.021</td>
+<td style="text-align: right;">8.573</td>
+<td style="text-align: right;">155.230</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">47.94</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATOM</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">ILE</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">71.384</td>
+<td style="text-align: right;">7.213</td>
+<td style="text-align: right;">155.534</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">45.77</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATOM</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">ILE</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">71.369</td>
+<td style="text-align: right;">6.388</td>
+<td style="text-align: right;">154.609</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">46.15</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATOM</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">CB</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">ILE</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">71.017</td>
+<td style="text-align: right;">9.779</td>
+<td style="text-align: right;">155.073</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">48.24</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATOM</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">CG1</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">ILE</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">70.453</td>
+<td style="text-align: right;">10.145</td>
+<td style="text-align: right;">156.446</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">49.92</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</small><p><small style="font-size: 12px;"></small></p>
+<p>For each atom we have a set of information:</p>
+<ul>
+<li><p>type of atom</p></li>
+<li><p>number of each element</p></li>
+<li><p>atom name. Each atom in the structure of each residue is named with a specific nomenclature.</p></li>
+<li><p>amino acid name (for example Ile, Arg, Asp, etc.)</p></li>
+<li><p>the chain of belonging of each atom</p></li>
+<li><p>the residue number</p></li>
+<li><p>the coordinates of each atom (x, y and z)</p></li>
+<li><p>B-factor</p></li>
+<li><p>type of atom, for example: C, N, O etc.</p></li>
+</ul>
+<div class="cell" data-fig.dim="[3.5,3.5]">
+<div class="cell-output-display">
+<div id="fig-contactMatrix" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="stat_dist_files/figure-html/fig-contactMatrix-1.png" class="img-fluid figure-img" width="336"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.1: Using the <code>image</code> function of R, we report the contact matrix of the antibody present in the 1nca pdb file. Each pair of residue are in contact if the distance between their c-alpha atoms have a distance lower then a certain threshold.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In <a href="#fig-contactMatrix">Figure&nbsp;<span>3.1</span></a> the residue-residue contact matrix for the antibody of the 1nca pdb is reported.</p>
+<p>In order to visualize the number of contacts of each residue, we report a plot where the residue number and the number of contacts are reported in the x-axis and y-axis, respectively. Interestingly, by analyzing the Figure <a href="#fig-contactResidues">Figure&nbsp;<span>3.2</span></a> is possible to note regions of the protein with a high number of contacts and regions with low number of contacts.</p>
+<div class="cell" data-fig.dim="[8,4]">
+<div class="cell-output-display">
+<div id="fig-contactResidues" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="stat_dist_files/figure-html/fig-contactResidues-1.png" class="img-fluid figure-img" width="768"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.2: For each residue the number of contacts is shown. Each pair of residue are in contact if the distance between their c-alpha atoms have a distance lower then <span class="math inline">\(12 Å\)</span>.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In fact, this analysis allow us to analyze some structural properties of the protein fold: regions with a higher number of contacts are located in the core of the protein, while regions with fewer contacts are populated by residues exposed to the solvent.</p>
+<p>The purpose of this analysis is to analyze the absolute and relative frequencies of the number of contacts that each residue has with all its closest residues.</p>
+<p>Therefore, we calculate the number of residues that gave <span class="math inline">\(n\)</span> contacts, where <span class="math inline">\(n\)</span> ranges from 0 to the maximum number of contacts that a residue can make in this specific protein. We increase the value of <span class="math inline">\(n\)</span> by adding 1 contacts to each step of the procedure. In the following table we report the absolute frequencies, i.e.&nbsp;how many residues have 0 contacts, how many residues have 1 contact, how many residues have 2 contacts, and so on.</p>
+<p><small style="font-size: 10px"></small></p><small style="font-size: 10px">
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">10</th>
+<th style="text-align: right;">12</th>
+<th style="text-align: right;">13</th>
+<th style="text-align: right;">14</th>
+<th style="text-align: right;">15</th>
+<th style="text-align: right;">16</th>
+<th style="text-align: right;">17</th>
+<th style="text-align: right;">18</th>
+<th style="text-align: right;">19</th>
+<th style="text-align: right;">20</th>
+<th style="text-align: right;">21</th>
+<th style="text-align: right;">22</th>
+<th style="text-align: right;">23</th>
+<th style="text-align: right;">24</th>
+<th style="text-align: right;">25</th>
+<th style="text-align: right;">26</th>
+<th style="text-align: right;">27</th>
+<th style="text-align: right;">28</th>
+<th style="text-align: right;">29</th>
+<th style="text-align: right;">30</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">14</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">31</th>
+<th style="text-align: right;">32</th>
+<th style="text-align: right;">33</th>
+<th style="text-align: right;">34</th>
+<th style="text-align: right;">35</th>
+<th style="text-align: right;">36</th>
+<th style="text-align: right;">37</th>
+<th style="text-align: right;">38</th>
+<th style="text-align: right;">39</th>
+<th style="text-align: right;">40</th>
+<th style="text-align: right;">41</th>
+<th style="text-align: right;">42</th>
+<th style="text-align: right;">43</th>
+<th style="text-align: right;">44</th>
+<th style="text-align: right;">45</th>
+<th style="text-align: right;">46</th>
+<th style="text-align: right;">47</th>
+<th style="text-align: right;">48</th>
+<th style="text-align: right;">49</th>
+<th style="text-align: right;">50</th>
+<th style="text-align: right;">51</th>
+<th style="text-align: right;">52</th>
+<th style="text-align: right;">53</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</small><p><small style="font-size: 10px"></small></p>
+<p>For both tables the second row is “how many residues” and the first row is “have n contacts”. For example, we observe that there 19 residue interacting with 8 residues, as well as, there is 1 residue interacting with 44 residues. As described above, we calculate the relative frequency by dividing each element of absolute frequency by the total number of contacts.</p>
+<p><small style="font-size: 10px"></small></p><small style="font-size: 10px">
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">10</th>
+<th style="text-align: right;">12</th>
+<th style="text-align: right;">13</th>
+<th style="text-align: right;">14</th>
+<th style="text-align: right;">15</th>
+<th style="text-align: right;">16</th>
+<th style="text-align: right;">17</th>
+<th style="text-align: right;">18</th>
+<th style="text-align: right;">19</th>
+<th style="text-align: right;">20</th>
+<th style="text-align: right;">21</th>
+<th style="text-align: right;">22</th>
+<th style="text-align: right;">23</th>
+<th style="text-align: right;">24</th>
+<th style="text-align: right;">25</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0023</td>
+<td style="text-align: right;">0.0046</td>
+<td style="text-align: right;">0.0046</td>
+<td style="text-align: right;">0.0069</td>
+<td style="text-align: right;">0.0138</td>
+<td style="text-align: right;">0.0092</td>
+<td style="text-align: right;">0.0115</td>
+<td style="text-align: right;">0.0207</td>
+<td style="text-align: right;">0.0138</td>
+<td style="text-align: right;">0.0391</td>
+<td style="text-align: right;">0.0322</td>
+<td style="text-align: right;">0.0322</td>
+<td style="text-align: right;">0.0368</td>
+<td style="text-align: right;">0.0437</td>
+<td style="text-align: right;">0.0414</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">26</th>
+<th style="text-align: right;">27</th>
+<th style="text-align: right;">28</th>
+<th style="text-align: right;">29</th>
+<th style="text-align: right;">30</th>
+<th style="text-align: right;">31</th>
+<th style="text-align: right;">32</th>
+<th style="text-align: right;">33</th>
+<th style="text-align: right;">34</th>
+<th style="text-align: right;">35</th>
+<th style="text-align: right;">36</th>
+<th style="text-align: right;">37</th>
+<th style="text-align: right;">38</th>
+<th style="text-align: right;">39</th>
+<th style="text-align: right;">40</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">0.0322</td>
+<td style="text-align: right;">0.0368</td>
+<td style="text-align: right;">0.0391</td>
+<td style="text-align: right;">0.0322</td>
+<td style="text-align: right;">0.0276</td>
+<td style="text-align: right;">0.0368</td>
+<td style="text-align: right;">0.0368</td>
+<td style="text-align: right;">0.0483</td>
+<td style="text-align: right;">0.0483</td>
+<td style="text-align: right;">0.0253</td>
+<td style="text-align: right;">0.0437</td>
+<td style="text-align: right;">0.0276</td>
+<td style="text-align: right;">0.0391</td>
+<td style="text-align: right;">0.0345</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">41</th>
+<th style="text-align: right;">42</th>
+<th style="text-align: right;">43</th>
+<th style="text-align: right;">44</th>
+<th style="text-align: right;">45</th>
+<th style="text-align: right;">46</th>
+<th style="text-align: right;">47</th>
+<th style="text-align: right;">48</th>
+<th style="text-align: right;">49</th>
+<th style="text-align: right;">50</th>
+<th style="text-align: right;">51</th>
+<th style="text-align: right;">52</th>
+<th style="text-align: right;">53</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0253</td>
+<td style="text-align: right;">0.0092</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">0.0161</td>
+<td style="text-align: right;">0.0092</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">0.0069</td>
+<td style="text-align: right;">0.0092</td>
+<td style="text-align: right;">0.0115</td>
+<td style="text-align: right;">0.0092</td>
+<td style="text-align: right;">0.0092</td>
+<td style="text-align: right;">0.0023</td>
+<td style="text-align: right;">0.0023</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</small><p><small style="font-size: 10px"></small></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In the following R code, both absolute and relative frequencies </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># of residue contacts are calculated</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bio3d)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pdb_aus <span class="ot">&lt;-</span> <span class="fu">read.pdb</span>(<span class="st">"1nca"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df_coord <span class="ot">&lt;-</span> pdb_aus<span class="sc">$</span>atom</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># setting parameters</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># atibody atom selection</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>df_coord_Ab <span class="ot">&lt;-</span> df_coord[df_coord<span class="sc">$</span>chain <span class="sc">==</span> <span class="st">"H"</span> <span class="sc">|</span> df_coord<span class="sc">$</span>chain <span class="sc">==</span> <span class="st">"L"</span>,]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting only c-alpha atoms</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>df_coord_ca <span class="ot">&lt;-</span> df_coord_Ab[df_coord_Ab<span class="sc">$</span>elety<span class="sc">==</span><span class="st">"CA"</span>,]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>df_coord_ca_xyz <span class="ot">&lt;-</span> df_coord_ca[,<span class="fu">c</span>(<span class="st">"x"</span>,<span class="st">"y"</span>,<span class="st">"z"</span>)]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_coord_ca)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># contacts matrix definition</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>DistMat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(df_coord_ca_xyz))</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>DistMat_Bin <span class="ot">&lt;-</span> DistMat</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>DistMat_Bin[DistMat_Bin <span class="sc">&lt;=</span> cutoff] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>DistMat_Bin[DistMat_Bin <span class="sc">&gt;</span> cutoff] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(DistMat_Bin)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># using the matrix for residue-residue pairs analysis.</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># in this case we need to remove the redundant information </span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># due to symmetry properties of the distance matrix. </span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>DistMat_Bin_NoSym <span class="ot">&lt;-</span> DistMat_Bin</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>DistMat_Bin_NoSym[<span class="fu">lower.tri</span>(DistMat_Bin_NoSym, <span class="at">diag =</span> <span class="cn">FALSE</span>)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(DistMat_Bin_NoSym) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(DistMat_Bin_NoSym)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># On the contrary, for analysis conctacts of each node:</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># conctacts vector</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>contacts <span class="ot">&lt;-</span> <span class="fu">colSums</span>(DistMat_Bin)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  contacts, <span class="at">pch=</span><span class="dv">20</span>, <span class="at">cex=</span><span class="fl">1.2</span>, </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">"Residue number"</span>, <span class="at">ylab=</span><span class="st">"Number of contacts"</span>, </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="fl">1.4</span>, <span class="at">col=</span><span class="st">"black"</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(contacts, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">lwd=</span><span class="fl">1.4</span>)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co"># absolute frequencies</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>absF <span class="ot">&lt;-</span> <span class="fu">table</span>(contacts)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co"># relative frequencies</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>relF <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">table</span>(contacts)<span class="sc">/</span><span class="fu">sum</span>(<span class="fu">table</span>(contacts)),<span class="dv">4</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(relF)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co"># How to use ggplot </span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>df_ggplot <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">ResNum =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(contacts),</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">cont =</span> contacts</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_ggplot, <span class="fu">aes</span>(<span class="at">x =</span> ResNum, <span class="at">y =</span> cont)) <span class="sc">+</span> </span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>)) <span class="sc">+</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Residue Number"</span>, <span class="at">y =</span> <span class="st">"Contacts"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="histograms" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="histograms"><span class="header-section-number">3.2</span> Histograms</h2>
+<p>In statistics, data is often represented using a histogram, which is constructed by dividing the data into a number of different intervals for each of which the number of the items is reported. Therefore, for each interval (or class) of data we associate the relative (or absolute) frequency, which corresponds to the area of the specific rectangle.</p>
+<p>Compared to the mean and variation calculation, the histogram provides a lot of additional information about the nature of the data. Indeed, by analyzing the shape of the distribution we can better investigate the properties of the data.</p>
+<p>To construct a histogram from a continuous variable we need to split the data into intervals, called bins, and count the number of times that an event occur for each bin.</p>
+<p>In order to understand the histogram definition also through an concrete application, we consider the following problem: To better describe the structural properties of a protein, may be useful to analyze the distribution of distances between a residue and any other. Therefore, according to the previous R script, the histogram of the distances can be obtained using <code>hist</code> function of R. In particular, as shown in <a href="#fig-Histograms">Figure&nbsp;<span>3.3</span></a>, each histogram can be obtained with different resolution. Indeed, changing the size of the bins we have a different count of items belonging to the given bin, meaning that the shape of the histogram can change according to the chosen bin size. The idea is that the two extreme situations (bins too large and bins too small) do not lead to useful information. In fact, if the size of the bins tends to zero, most of the bins are “empty” (no associated items). On the contrary, when the size of the bins tends to the maximum variation of the data set, all items belong to the single bin of the histogram. Both conditions are not informative. Therefore, the ideal condition is one that lives in the middle, allowing us to observe the shape of the histogram (which suggest us how the data is distributed). In <a href="#fig-Histograms">Figure&nbsp;<span>3.3</span></a> are reported three cases that give us information about data distribution. In particular, for the three cases the breaks argument of hist function of R has changed. Defining the number of breaks, in fact, is one of the most important precautions in this type of analysis. Using the breaks argument it is possible to specify the number of cells we want in the histogram. Note that this number is only indicative for the R algorithm (it is only a suggestion), since R calculates the best number of bins for histogram definition, keeping however the information about the number of bins provided by the user.</p>
+<div class="cell" data-fig.dim="[8,3.5]">
+<div class="cell-output-display">
+<div id="fig-Histograms" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="stat_dist_files/figure-html/fig-Histograms-1.png" class="img-fluid figure-img" width="768"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.3: Residue-residue distance considering the c-alpha atoms of the 1nca pdb. Histogram with breaks = 100 (left), with breaks = 50 (center) and with breaks = 30 (right).</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In the following R script we report a typical approach for histogram calculation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In the following R code, the histrogram procedure is shown</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bio3d)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>pdb_aus <span class="ot">&lt;-</span> <span class="fu">read.pdb</span>(<span class="st">"1nca"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df_coord <span class="ot">&lt;-</span> pdb_aus<span class="sc">$</span>atom</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># setting parameters</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># atibody atom selection</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>df_coord_Ab <span class="ot">&lt;-</span> df_coord[df_coord<span class="sc">$</span>chain <span class="sc">==</span> <span class="st">"H"</span> <span class="sc">|</span> df_coord<span class="sc">$</span>chain <span class="sc">==</span> <span class="st">"L"</span>,]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting only c-alpha atoms</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>df_coord_ca <span class="ot">&lt;-</span> df_coord_Ab[df_coord_Ab<span class="sc">$</span>elety<span class="sc">==</span><span class="st">"CA"</span>,]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>df_coord_ca_xyz <span class="ot">&lt;-</span> df_coord_ca[,<span class="fu">c</span>(<span class="st">"x"</span>,<span class="st">"y"</span>,<span class="st">"z"</span>)]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_coord_ca)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># contacts matrix definition</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>DistMat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(df_coord_ca_xyz))</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(DistMat, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25000</span>), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">80</span>), <span class="at">breaks=</span><span class="dv">100</span>, <span class="at">main=</span><span class="st">"Histogram with breaks = 100"</span>, </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="fl">1.6</span>, <span class="at">cex.main=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">"Distances"</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(DistMat, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25000</span>), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">80</span>), <span class="at">breaks=</span><span class="dv">50</span>, <span class="at">main=</span><span class="st">"Histogram with breaks = 50"</span>, </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="fl">1.6</span>, <span class="at">cex.main=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">"Distances"</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(DistMat, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25000</span>), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">80</span>), <span class="at">breaks=</span><span class="dv">20</span>, <span class="at">main=</span><span class="st">"Histogram with breaks = 30"</span>, </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="fl">1.6</span>, <span class="at">cex.main=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">"Distances"</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>DistMat_vet <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(DistMat)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>DistMat_vet_red <span class="ot">&lt;-</span> <span class="fu">sample</span>(DistMat_vet,<span class="dv">1000</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">hist</span>(DistMat_vet_red,<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">80</span>), <span class="at">breaks=</span><span class="dv">100</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(h<span class="sc">$</span>mids,h<span class="sc">$</span>counts,<span class="at">labels=</span>h<span class="sc">$</span>counts, <span class="at">adj=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="interpretation-of-the-histogram" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="interpretation-of-the-histogram"><span class="header-section-number">3.2.1</span> Interpretation of the histogram</h3>
+<p>One of the main purpose of these notes is to provide knowledge that allow us to interpret the nature of data through specific analysis. As mentioned before, the shape of an histogram is an important element for discuss about data distribution. For example, looking at <a href="#fig-Histograms">Figure&nbsp;<span>3.3</span></a>, we note that the shape of the distribution is not symmetric. The right tail of the histogram is more elongated than the left tail. Is there a reason for this asymmetry? Obviously yes. First of all, it is not possible to have a more elongated tail in the left part of the distribution because it is not possible to have distance between two atoms less then zero (since distance is a positive definite quantity). Therefore, there are more long-distance interactions than short-distance interactions. In general, the pairs of atoms (o residues) with the most frequent distance values are in the central part of the histogram, between <span class="math inline">\(25 Å\)</span> and <span class="math inline">\(35 Å\)</span>. The most important effect of the data asimmetry is the following: the mean does not correspond with the mode (i.e.&nbsp;the value with the highest frequency), since the tail on the right helps to shift the mean in such direction.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Analysis of residue-residue interactions at the interface. In particular, taking into account a antibody-antigen complex (such as the pdb code: 3HFM), we would calculate:</p>
+<ul>
+<li><p>An histogram of all <span class="math inline">\(C_{\alpha}-C_{\alpha}\)</span> distances, just considering the intermolecular interactions. For this analysis we consider a contact between two residues only if the distance between their <span class="math inline">\(C_{\alpha}\)</span> atoms is less than <span class="math inline">\(12 Å\)</span>.</p></li>
+<li><p>Calculate the histogram of all interatomic distances increasing step by step the average hydrophobicity according to the Kyte Doolittle hydrophobicity scale.</p></li>
+</ul>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./desc_stats.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Basics of Descriptive Statistics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./intr_prob.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to probability</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

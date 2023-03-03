@@ -1,0 +1,34 @@
+project:
+  type: book
+
+book:
+  title: "Data handling for biological sciences"
+  subtitle: "Theoretical aspects and examples using R programming language"
+  cover-image: cover1.png
+  downloads: [pdf, epub]
+  # author: "Edoardo Milanetti"
+  # date: "25/2/2023"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - desc_stats.qmd
+    - stat_dist.qmd
+    - intr_prob.qmd
+  appendices: 
+    - r.qmd
+  # references: 
+  #   - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: [flatly, style.scss]
+    df-print: kable
+  pdf:
+    documentclass: scrreprt
+    keep-tex: true
+    df-print: kable
+
+editor: visual
+

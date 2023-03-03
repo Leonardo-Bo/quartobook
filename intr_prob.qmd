@@ -1,0 +1,281 @@
+# Introduction to probability
+
+Working with frequency means concretely counting how many times an event occurs. However, the interpretation of these results is limited to the specific case we are analyzing. When the number of data is high and the analyzed sample is well representative of the entire population, it is possible to generalize the concept of frequency. For this purpose the concept of probability is used. In this sense, the results we obtain, for example by analyzing an experiment as the structural properties of proteins, are elements of a sample space $\omega$ and the subset of $\omega$ are called "events". For each event we will assign a certain probability, a number between 0 and 1, which indicates the probability that the specific event will occur.
+
+From a more formal point of view, we define probability $P(A)$ as the probability that event A occurs. Let's see how to define the probability:
+
+$$
+P(A) = \frac{Outcomes}{TotalOutcomes}
+$$
+
+Therefore, $P(A)$ is equal to the number of favorable outcomes divided by the total possible number of outcomes. More specifically, the set of all possible outcomes that can occur is the "sample space". By definition, the probability of any event is always between 0 and 1:
+
+$$
+0 \le P(A) \le 1
+$$
+
+**The coin toss**
+
+Let's consider a coin with two faces: the first is named tails (T) and the second is named heads (H). If we flip a coin and we want to predict which face show up on our hand, we can not have deterministic predictions, since tossing a coin has many variables and it can be considered a random process. However, a probabilistic process is not without answers. A probabilistic event has probability-based responses. Therefore we take as the sample space associated with this experiment the set: $\Omega = \{H,T\}$. Therefore, the probability of getting heads (or tails) is $1/2 = 0.5 = 50\%$.
+
+To simulate the coin toss with R we can use the "sample" function, as shown in the following example.
+
+```{r, fig.dim=c(8, 6)}
+#| label: fig-Ratio
+#| fig-cap: The ratio between Heads and Tails results are shown as function of the step number. To obtain Head or Tails the Bernoulli process is applied.
+
+# In the following R code, a simple coin toss is shown
+
+# single coin
+r <- sample(c("H", "T"), 1)
+# print(r)
+
+# two coins
+r <- sample(c("HH", "TT", "HT", "TH"), 1)
+# print(r)
+
+N <- 10
+deltaN <- 10
+TotalStep <- 250
+vet_ratio_HT <- vector("double", TotalStep)
+
+for(s in 1:TotalStep){
+  vet_r <- vector("character", N)
+  for(i in 1:N){
+    r_aus <- sample(c("H", "T"), 1)
+    vet_r[i] <- r_aus
+  }
+  ratio_HT <- table(vet_r)[1]/table(vet_r)[2]
+  vet_ratio_HT[s] <- ratio_HT
+  N <- N + deltaN
+}
+
+plot(vet_ratio_HT, pch=20, ylab="Head frequency/Tails frequency", xlab="steps", cex.axis=1.4, cex.lab=1.3)
+lines(vet_ratio_HT, col="blue")
+abline(h=1, col="red", lwd=4)
+```
+
+In @fig-Ratio the ratio between the number of Heads (H) and the number of Tails (T) under variation of the number of tests is reported. As shown, when we have a low number of coin flips, the variability of the ratio (that is our observable) is very high. On the contrary, as the number of coin tosses increases, the variation decreases and the average is 1, meaning that the number of Heads is statistically the same of the number of tails.
+
+**The toss of two coins**
+
+How to determine the probability of an event in case we have two coins? When flipping the first coin we have two possibilities heads or tails. Whether we get heads (or tails) from the first throw, we have two other possibilities for the second throw (heads or tails). In this way, we can define a tree diagram. Therefore, in this case, the sample space is composed of 4 elements:
+
+$$
+\Omega = \{HH,HT,TH,TT\}
+$$
+
+In fact, the space of all possible configurations is composed of the following possibilities:
+
+-   Get heads from both the first and second coins (outcome: HH).
+
+-   Get heads from the first coin and tails from the second coin (outcome: TH).
+
+-   Get heads from the second coin and tails from the first coin (outcome: HT).
+
+-   Get tails from both the first and second coins (outcome: TT).
+
+**The toss of three coins**
+
+Similarly to the two previous cases, we can define the sample space as follows:
+
+$$
+\Omega = \{HHH,HHT,HTH,HTT,THH,THT,TTH,TTT\}
+$$
+
+This space $\Omega$ was again determined considering the tree diagram introduced above.
+
+Therefore, knowing the $\Omega$ space, we can determine the probability of a set of events. For example:
+
+*What is the probability that with three coins you get at least two head?*
+
+According to probability definition, we need to count all outcomes that meet the given condition. In this case we have 4 possible outcomes: $\{HHH, HHT, HTH, THH \}$, while all possible outcomes are, as shown in the previous equation, 8. Therefore:
+
+$$
+P(H2) = \frac{Outcomes}{TotalOutcomes} = \frac{4}{8} = \frac{1}{2} = 0.5
+$$
+
+where the H2 is the event to obtain at least two heads.
+
+**The toss of N coins**
+
+How do we determine the sample space $\Omega$ in a general way? This is a crucial point because as the number N of coins increases, we have many possible configurations to count for the definition of the sample space.
+
+Based on the tree diagram strategy, from a mathematical point of view, the size of the sample space can be calculated as follows:
+
+$$
+N_{AO} = N_{s}^{m}
+$$
+
+where, in this case, $N_{AO}$ is the number of all possible outcomes, $N_{s}$ is the number of the side (in this case 2, since we take into account the coins. In the case of the roll of the die $N_{s}$ is equal to 6). The last parameter, m, the number of objects (in this case the number of coins) that we use in our experiment.
+
+**Amino acid contact probability**
+
+To better understand the concept of probability, we focus our attention on a specific biological problem. We consider a specific membrane protein for calculate what the probability is that an amino acid (eg Alanine) is at a distance less than $d$ with another amino acid (eg Lysine). If we repeat this process for each pair of amino acids, we are able to define a matrix of NxN size, where N is the number of natural amino acids (N=20), where is each matrix element we have the probability that the i-th amino acid interacts with the j-th amino acid.
+
+::: {.callout-tip}
+## Biological focus: Membrain proteins
+
+Membrane proteins are proteins that are part of biological membranes. All cells are contained within a hydrophobic lipid bilayer and the membrane proteins are embedded in this lipid bilayer. These proteins are involved in a wide variety of biological processes including photosynthesis, respiration, signal transduction, molecular transport and catalysis. Indeed, membrane proteins represent between $20\%$ and $30\%$ of the proteomes of most organisms and more than $40\%$ of drug targets.
+
+Despite their importance, membrane proteins continue to be among the most challenging targets in structural biology. For this reason, yet very few structures of these proteins have been solved by X-ray crystallography or NMR experimental technique. The first membrane protein structure was published in 1985 and since then the number has increased slowly (but steadily).
+
+:::
+
+For this exercise, we select a specific membrane protein, pdb code: 5T0O. Unlike what we did previously, we now choose to define a contact between two residues if the centroids of the two side chains are located at a distance less than a certain threshold. Previously, we considered the distances between the $C_{\alpha}$ of two residues, now we are considering the distances between the two centroids. This choice allows us to consider not only the structural organization of the protein backbone, but also the arrangement of the residue side chains. Given a residue, we have a set of atoms belonging to that residue. The centroid is a point, in this case defined defined in three-dimensional space and therefore composed of three components $C = (C_x, C_y, C_z)$. For each residue we define the centroid point as follows:
+
+$$
+C_{x} = \frac{\sum_{i=1}^N x_i}{N}, 
+C_{y} = \frac{\sum_{i=1}^N y_i}{N}, 
+C_{z} = \frac{\sum_{i=1}^N z_i}{N}
+$$
+
+```{r, eval=FALSE}
+# In the following R code the contact probability matrix is defined 
+# by analyzing the contact frequency of the amino acid pairs of 
+# a specific membrain protein
+
+library(bio3d)
+library(tidyverse)
+
+invisible(capture.output(pdb_aus <- read.pdb("5T0O")))
+df_coord <- pdb_aus$atom
+
+df_contacts <- df_coord %>% 
+  filter(resid %in% aa.table$aa3[1:20]) %>%
+  group_by(resno, resid, chain) %>%
+  summarise(x = mean(x), y = mean(y), z = mean(z)) %>%
+  cross_join(x = ., y = ., suffix = c("_1", "_2")) %>% 
+  mutate(distance = sqrt((x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2)) %>%
+  filter(distance > 0 & distance < 12) %>%
+  group_by(resid_1, resid_2) %>% 
+  summarise(occ=n()) %>% 
+  ungroup() %>% 
+  complete(resid_1, resid_2, fill = list(occ = 0)) %>%
+  mutate(freq = occ / sum(occ))
+
+df_contacts %>%
+  ggplot() + 
+  geom_tile(aes(resid_1, resid_2, fill=freq), ) + 
+  scale_y_discrete(limits=rev) + 
+  scale_x_discrete(position = "top") + 
+  scale_fill_viridis_c(option = "plasma") +
+  theme_minimal() +
+  theme(axis.title = element_blank(), legend.title = element_blank())
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+#| label: fig-ProbMat
+#| fig-cap: For each amino acid pair the contact probability is reported by analyzing centroid-centroid residue distances of the pdb code 5T0O.
+
+# In the following R code the contact probability matrix is defined 
+# by analyzing the contact frequency of the amino acid pairs of 
+# a specific membrain protein
+
+library(bio3d)
+library(tidyverse)
+
+invisible(capture.output(pdb_aus <- read.pdb("5T0O")))
+df_coord <- pdb_aus$atom
+
+df_contacts <- df_coord %>% 
+  filter(resid %in% aa.table$aa3[1:20]) %>%
+  group_by(resno, resid, chain) %>%
+  summarise(x = mean(x), y = mean(y), z = mean(z)) %>%
+  cross_join(x = ., y = ., suffix = c("_1", "_2")) %>% 
+  mutate(distance = sqrt((x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2)) %>%
+  filter(distance > 0 & distance < 12) %>%
+  group_by(resid_1, resid_2) %>% 
+  summarise(occ=n()) %>% 
+  ungroup() %>% 
+  complete(resid_1, resid_2, fill = list(occ = 0)) %>%
+  mutate(freq = occ / sum(occ))
+
+df_contacts %>%
+  ggplot() + 
+  geom_tile(aes(resid_1, resid_2, fill=freq), ) + 
+  scale_y_discrete(limits=rev) + 
+  scale_x_discrete(position = "top") + 
+  scale_fill_viridis_c(option = "plasma") +
+  theme_minimal() +
+  theme(axis.title = element_blank(), legend.title = element_blank())
+```
+
+<small style="font-size: 10px; text-align: center;">
+
+```{r, echo=FALSE}
+#| label: tbl-ProbMat
+#| tbl-cap: For each amino acid pair the contact probability is reported by analyzing centroid-centroid residue distances of the pdb code 5T0O.
+
+df_to_latex <- df_contacts %>% 
+  select(!occ) %>% 
+  pivot_wider(names_from = resid_2, values_from = freq, values_fill = 0)
+
+df_to_latex <- as.data.frame(df_to_latex)
+rownames(df_to_latex) <- df_to_latex$resid_1
+df_to_latex <- round(df_to_latex[, -1], 5)
+df_to_latex
+```
+
+</small>
+
+Analyzing the data, like any other quantitative operation, needs to be accompanied by a check on the results obtained. If obvious results are found from our analysis, we can hope that the new results may be true. For example, looking at the contact probability matrix shown in @tbl-ProbMat we can draw some simple observations. One possible observation is that, in avergare, all amino acid pairs involving cysteine have a much lower probability of occurrence than other amino acid pairs.
+
+This result is certainly due to the fact that cysteine is an amino acid with a low frequency of occurrence in proteins, so also all the couples involving it are unlikely. Therefore, we would need to weigh the probability of each pair with the probability of occurrence of a single amino acid, since two amino acids that are very frequent in proteins are also more likely to interact with each other). The introduction of probability in the next sections will help us in this aim.
+
+## Venn Diagram
+
+In probability, a Venn diagram is a way to describe logical relations between events. A typical Venn diagram is composed of several circles inside a rectangle. The circles represent the events, while the rectangle represents the sample space, which has previously been defined as the set of all possible outcomes. Each circle in the Venn diagram is within the sample space because represents an event, a subset of the sample space. In @fig-venn we consider a simple Venn diagram which is defined by two events, A and B.
+
+```{r, echo=FALSE}
+#| label: fig-venn
+#| fig-cap: Venn Diagram for two events, A and B
+
+library(ggforce)
+
+ggplot() +
+  coord_fixed() + 
+  geom_circle(aes(x0 = 0.75, y0 = 0, r = 1), n=180, inherit.aes = FALSE, 
+              color = "steelblue4", fill = "steelblue4", alpha = 0.2) +
+  geom_circle(aes(x0 = -0.75, y0 = 0, r = 1), n=180, inherit.aes = FALSE, 
+              color = "green", fill = "green", alpha = 0.2) +
+  theme_void() +
+  theme(panel.background = element_rect(fill = 'grey90', color = 'grey90'), 
+        plot.margin = margin(0, 0, 0, 0, "cm")) +
+  annotate("text", label = "S", x = -2, y = 1.2, size = 12, fontface = "bold") +
+  annotate("text", label = "A", x = -0.75, y = 0.8, size = 12, fontface = "bold") +
+  annotate("text", label = "B", x = 0.75, y = 0.8, size = 12, fontface = "bold") +
+  scale_x_continuous(expand = c(0.1, 0.1)) +
+  scale_y_continuous(expand = c(0.1, 0.1))
+```
+
+The Venn diagram allows us to define not only the two events, A and B, but also to define the interactions between them. In particular, we can better visualize (and measure) the intersection space between two events (A $\cap$ B) and the union of the two event (A $\cup$ B).
+
+## Probability density function
+
+Now that the probability has been defined, we can introduce the Probability Density Function (PDF), as the continuous version of the histogram. Indeed, a PDF is obtained when the bin widths of the histogram are infinitesimal small. Similarly to the histogram, the probability density is distributed over the range of values describing our variable. By definition, the area under the PDF curve is equal to 1, which corresponds to the probability of having a value across the possible range of values. Therefore:
+
+$$
+\int_{-\infty}^{+\infty} \rho(x) \,dx = 1
+$$
+
+More interestingly, it is useful to calculate the probability that a value belongs to a given interval:
+
+$$
+P(x \in [x1,x2]) = \int_{x_1}^{x_2} \rho(x) \,dx
+$$
+
+in this case we calculate the probability that the variable $x$ is between $x_1$ and $x_2$.
+
+Here, we take into account a specific biological example for discuss about the probability density. To this end, we select a system extensively studied in the last period: the complex composed of the spike protein of the SARS-CoV-2 coronavirus and the angiotensin-converting enzyme 2, or ACE2 *receptor*.
+
+::: {.callout-tip}
+## Biological focus: The SARS-CoV-2 system
+
+SARS-CoV-2, similarly to SARS-CoV and MERS-CoV, attacks the lower respiratory system, thus causing viral pneumonia. It is well characterized that and how SARS-CoV infection is mediated by the high-affinity interactions between the receptor-binding domain (RBD) of the spike (S) glycoprotein and the human-host angiotensin-converting enzyme 2 (ACE2) receptor. The spike protein is located on the virus envelope and enables attachment to the host cell and the fusion between the virus and the cellular membrane. It has been shown that several critical residues in SARS-CoV-2's RBD provide favorable interactions with human ACE2, consistent with SARS-CoV-2's capability to infect the cell. From this point of view, the understanding of the molecular mechanism(s) of the interaction between the ACE2 receptor and the spike protein of the virus can be a key factor designing new drug compounds.
+
+> Mol Biosci. 2021 Jun 9;8:690655
+
+:::
+
+The main goal of this analysis is to characterize the two interfaces of this specific molecular complex. In particular, we want to study the residue-residue distance distribution only considering the residues belonging to the two binding sites. To define the binding site we use the distance between the c-alpha atoms, considering two residues in contact if their c-alpha-c-alpha distance is less than $12 Å$. To analyze the "compactness" of the two interface a local descriptor, which is a number associated to each interacting residue.
