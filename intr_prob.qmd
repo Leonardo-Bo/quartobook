@@ -113,13 +113,12 @@ where, in this case, $N_{AO}$ is the number of all possible outcomes, $N_{s}$ is
 
 To better understand the concept of probability, we focus our attention on a specific biological problem. We consider a specific membrane protein for calculate what the probability is that an amino acid (eg Alanine) is at a distance less than $d$ with another amino acid (eg Lysine). If we repeat this process for each pair of amino acids, we are able to define a matrix of NxN size, where N is the number of natural amino acids (N=20), where is each matrix element we have the probability that the i-th amino acid interacts with the j-th amino acid.
 
-::: {.callout-tip}
+::: callout-tip
 ## Biological focus: Membrain proteins
 
 Membrane proteins are proteins that are part of biological membranes. All cells are contained within a hydrophobic lipid bilayer and the membrane proteins are embedded in this lipid bilayer. These proteins are involved in a wide variety of biological processes including photosynthesis, respiration, signal transduction, molecular transport and catalysis. Indeed, membrane proteins represent between $20\%$ and $30\%$ of the proteomes of most organisms and more than $40\%$ of drug targets.
 
 Despite their importance, membrane proteins continue to be among the most challenging targets in structural biology. For this reason, yet very few structures of these proteins have been solved by X-ray crystallography or NMR experimental technique. The first membrane protein structure was published in 1985 and since then the number has increased slowly (but steadily).
-
 :::
 
 For this exercise, we select a specific membrane protein, pdb code: 5T0O. Unlike what we did previously, we now choose to define a contact between two residues if the centroids of the two side chains are located at a distance less than a certain threshold. Previously, we considered the distances between the $C_{\alpha}$ of two residues, now we are considering the distances between the two centroids. This choice allows us to consider not only the structural organization of the protein backbone, but also the arrangement of the residue side chains. Given a residue, we have a set of atoms belonging to that residue. The centroid is a point, in this case defined defined in three-dimensional space and therefore composed of three components $C = (C_x, C_y, C_z)$. For each residue we define the centroid point as follows:
@@ -269,13 +268,12 @@ in this case we calculate the probability that the variable $x$ is between $x_1$
 
 Here, we take into account a specific biological example for discuss about the probability density. To this end, we select a system extensively studied in the last period: the complex composed of the spike protein of the SARS-CoV-2 coronavirus and the angiotensin-converting enzyme 2, or ACE2 *receptor*.
 
-::: {.callout-tip}
+::: callout-tip
 ## Biological focus: The SARS-CoV-2 system
 
 SARS-CoV-2, similarly to SARS-CoV and MERS-CoV, attacks the lower respiratory system, thus causing viral pneumonia. It is well characterized that and how SARS-CoV infection is mediated by the high-affinity interactions between the receptor-binding domain (RBD) of the spike (S) glycoprotein and the human-host angiotensin-converting enzyme 2 (ACE2) receptor. The spike protein is located on the virus envelope and enables attachment to the host cell and the fusion between the virus and the cellular membrane. It has been shown that several critical residues in SARS-CoV-2's RBD provide favorable interactions with human ACE2, consistent with SARS-CoV-2's capability to infect the cell. From this point of view, the understanding of the molecular mechanism(s) of the interaction between the ACE2 receptor and the spike protein of the virus can be a key factor designing new drug compounds.
 
 > Mol Biosci. 2021 Jun 9;8:690655
-
 :::
 
 The main goal of this analysis is to characterize the two interfaces of this specific molecular complex. In particular, we want to study the residue-residue distance distribution only considering the residues belonging to the two binding sites. To define the binding site we use the distance between the c-alpha atoms, considering two residues in contact if their c-alpha-c-alpha distance is less than $12 Å$. To analyze the "compactness" of the two interface a local descriptor, which is a number associated to each interacting residue.

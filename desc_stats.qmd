@@ -57,7 +57,7 @@ par(new=T)
 plot(density(samp), xlim=c(0,1), ylim=c(0,2), col="red", main="", xlab="")
 ```
 
-::: {.callout-note}
+::: callout-note
 ## Methods: `ggplot2` function of R
 
 `ggplot2` is a powerful data visualization function in R that allows you to create a wide range of high-quality plots for exploring and visualizing your data. The function is part of the `ggplot2` package, which allows to add multiple layers to a given plot to create complex visualizations.
@@ -136,17 +136,17 @@ A more biological example may be the calculation of all contacts of a giver prot
 
 The standard deviation is a widely utilized measure of dispersion in data analysis, and it provides a quantification of how far data points deviate from the mean. In the context of this lecture series, which focuses on biological examples, we will examine the structural properties of proteins with particular emphasis. For illustrative purposes, we will focus on the myoglobin protein as an example.
 
-::: {.callout-tip}
+::: callout-tip
 ## Biological focus: Myoglobin
 
 Myoglobin is an iron- and oxygen-binding protein present in the cardiac and skeletal muscle tissue. It is should be remembered that myoglobin was the first protein whose structure was experimentally solved with the x-ray technique. In order to analyze the three-dimensional structure of this protein, we consider the pdb code: 1MBN. The structure is made up of 153 residues, for a total of 1216 atoms.
-
 :::
 
 As also shown in the R script below, we calculate the mean and standard deviation of the following set of numbers: the number of times each of the 20 amino acids appears in myoglobin sequence.
 
+```{=html}
 <style scoped> table { font-size: 10px; text-align: center; } td, th {padding: 4px 0 !important; } col { width: 5% !important; }</style>
-
+```
 | ALA | ARG | ASN | ASP | GLN | GLU | GLY | HIS | ILE | LEU | LYS | MET | PHE | PRO | SER | THR | TRP | TYR | VAL |
 |-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
 | 17  | 4   | 1   | 7   | 5   | 14  | 11  | 12  | 9   | 18  | 19  | 2   | 6   | 4   | 6   | 5   | 2   | 3   | 8   |
@@ -157,17 +157,19 @@ The average number of times each amino acid appears in the protein sequence is: 
 
 In order to determine the deviation of each value in a given dataset from the mean, one can calculate the difference between the mean and each individual value. This computation is shown in the second row of the table presented below.
 
+```{=html}
 <style scoped> table { font-size: 10px; text-align: center; } td, th {padding: 4px 0 !important; } col { width: 5% !important; }</style>
-
-| ALA  | ARG   | ASN   | ASP   | GLN   | GLU  | GLY  | HIS  | ILE  | LEU  | LYS    | MET   | PHE   | PRO   | SER   | THR   | TRP   | TYR   | VAL   |
-|------|-------|-------|-------|-------|------|------|------|------|------|--------|-------|-------|-------|-------|-------|-------|-------|-------|
-| 17   | 4     | 1     | 7     | 5     | 14   | 11   | 12   | 9    | 18   | 19     | 2     | 6     | 4     | 6     | 5     | 2     | 3     | 8     |
-| 8.95 | -4.05 | -7.05 | -1.05 | -3.05 | 5.95 | 2.95 | 3.95 | 0.95 | 9.95 | 10.95  | -6.05 | -2.05 | -4.05 | -2.05 | -3.05 | -6.05 | -5.05 | -0.05 |
+```
+| ALA  | ARG   | ASN   | ASP   | GLN   | GLU  | GLY  | HIS  | ILE  | LEU  | LYS   | MET   | PHE   | PRO   | SER   | THR   | TRP   | TYR   | VAL   |
+|------|-------|-------|-------|-------|------|------|------|------|------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
+| 17   | 4     | 1     | 7     | 5     | 14   | 11   | 12   | 9    | 18   | 19    | 2     | 6     | 4     | 6     | 5     | 2     | 3     | 8     |
+| 8.95 | -4.05 | -7.05 | -1.05 | -3.05 | 5.95 | 2.95 | 3.95 | 0.95 | 9.95 | 10.95 | -6.05 | -2.05 | -4.05 | -2.05 | -3.05 | -6.05 | -5.05 | -0.05 |
 
 When an amino acid appears more frequently than the average of the other amino acids, it is said to have positive dispersion; if it appears less frequently, it has negative dispersion. However, the previous definition of dispersion is not a reliable indicator, as the sum of all dispersion terms is zero by definition. To address this issue, we can calculate the squared value of each dispersion term, as presented in the third row of the table below.
 
+```{=html}
 <style scoped> table { font-size: 10px; text-align: center; } td, th {padding: 4px 0 !important; } col { width: 5% !important; }</style>
-
+```
 | ALA   | ARG   | ASN   | ASP   | GLN   | GLU   | GLY  | HIS   | ILE  | LEU   | LYS    | MET   | PHE   | PRO   | SER   | THR   | TRP   | TYR   | VAL   |
 |-------|-------|-------|-------|-------|-------|------|-------|------|-------|--------|-------|-------|-------|-------|-------|-------|-------|-------|
 | 17    | 4     | 1     | 7     | 5     | 14    | 11   | 12    | 9    | 18    | 19     | 2     | 6     | 4     | 6     | 5     | 2     | 3     | 8     |
@@ -229,7 +231,7 @@ variance_2 <- var(freq_aa)
 sdev_final <- sd(freq_aa)
 ```
 
-::: {.callout-note}
+::: callout-note
 ## Methods: bio3d R package
 
 Bio3D is a powerful R package designed for the analysis and visualization of biomolecular structures and sequence data. It provides a comprehensive suite of functions for the analysis and manipulation of protein and nucleic acid structures, including tools for protein structure alignment, superimposition, and analysis of structural dynamics. Additionally, Bio3D offers a range of functions for the analysis of protein and nucleic acid sequences, including tools for sequence alignment, phylogenetic analysis, and sequence motif discovery. Bio3D also provides a range of tools for the visualization of biomolecular structures and data, including functions for creating high-quality publication-ready plots and 3D visualizations. Overall, Bio3D is a versatile and powerful tool for the analysis and visualization of biomolecular data, and is widely used in the fields of structural biology, bioinformatics, and biophysics.
@@ -263,13 +265,12 @@ To determine quartiles for a dataset, we need to consider whether the number of 
 
 To further illustrate the concept of quartiles, we will apply these theoretical principles to another example of biochemical interest.
 
-::: {.callout-tip}
+::: callout-tip
 ## Biological focus: FMRP (Fragile X Mental Retardation Protein)
 
 FMRP is a widely expressed RNA-binding protein which play a crucial role for proper synaptic plasticity and architecture, which is critical for normal neural development and function.
 
 It is encoded by the FMR1 human gene (FMRP translational regulator 1) and expressed in the brain and other tissues. Mutations or loss of FMRP function can lead to Fragile X syndrome, which is a genetic disorder that is the leading cause of inherited intellectual disability and autism spectrum disorders. FMRP is involved in the regulation of protein synthesis at synapses, and is thought to play a key role in the formation and maintenance of neural circuits in the brain.
-
 :::
 
 In this particular biological example, we aim to analyze the distribution of B-factor values for each residue in the N-terminal domain of the FMRP protein. The B-factor, also known as the temperature factor, is a measure of the mobility of atoms within a protein crystal. It reflects the root-mean-square amplitude of atomic oscillation around their equilibrium positions, and is reported in the PDB file of a protein.
@@ -312,8 +313,9 @@ if(even_odd_control == 0){
 }
 ```
 
-::: {.callout-caution}
+::: callout-caution
 ## Test
+
 Comparison of active state (pdb code: 1FMK) and inactive state (pdb code: 2SRC) of the c-Src kinase. To this end:
 
 1.  Calculate for both structures the mean and the standard deviation of all distances among charged residues (CRs). Likewise calculate the mean and the standard deviation of all distances among uncharged residues (URs).
@@ -335,5 +337,4 @@ Comparison of active state (pdb code: 1FMK) and inactive state (pdb code: 2SRC) 
 -   polar amino acids: Ser, Thr, Tyr, Asn and Gln.
 
 -   non-polar amino acids: Gly, Ala, Val, Cys, Pro, Leu, Ile, Met, Trp and Phe.
-
 :::

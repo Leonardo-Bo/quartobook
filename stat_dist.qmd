@@ -28,13 +28,12 @@ $$
 n_i = \frac{f_i}{N}
 $$
 
-::: {.callout-tip}
+::: callout-tip
 ## Biological focus: Monoclonal antibody
 
 The monoclonal antibodies are a class of proteins designed in the laboratory in order to be able to bind specific targets. There are many types of monoclonal antibodies, but their common feature is that they can bind only one antigen. Monoclonal antibodies are often used in the diagnosis and treatment of many diseases, including some types of cancer.
 
 As an example, we focus our attention on the monoclonal antibody for the influenza virus. More specifically, the crystal structure of the complex between neuraminidase from influenza virus (subtype N9 and isolated from an avian source) and the antigen-binding fragment (Fab) of monoclonal antibody NC41 has been refined (pdb code: 1NCA).
-
 :::
 
 To better elucidate both the absolute and relative frequency concept, we analyze a specific biological problem. Here, the analysis of the contacts is performed for the case of a specific monoclonal antibody, which has been designed for the neuraminidase from influenza virus (pdb code: 1NCA). To this end, we define two residues in contact if the distance between their c-alpha atoms have a distance less than $12 Å$.
@@ -318,7 +317,7 @@ text(h$mids,h$counts,labels=h$counts, adj=c(0.5, -0.5))
 
 One of the main purpose of these notes is to provide knowledge that allow us to interpret the nature of data through specific analysis. As mentioned before, the shape of an histogram is an important element for discuss about data distribution. For example, looking at @fig-Histograms, we note that the shape of the distribution is not symmetric. The right tail of the histogram is more elongated than the left tail. Is there a reason for this asymmetry? Obviously yes. First of all, it is not possible to have a more elongated tail in the left part of the distribution because it is not possible to have distance between two atoms less then zero (since distance is a positive definite quantity). Therefore, there are more long-distance interactions than short-distance interactions. In general, the pairs of atoms (o residues) with the most frequent distance values are in the central part of the histogram, between $25 Å$ and $35 Å$. The most important effect of the data asimmetry is the following: the mean does not correspond with the mode (i.e. the value with the highest frequency), since the tail on the right helps to shift the mean in such direction.
 
-::: {.callout-caution}
+::: callout-caution
 ## Test
 
 Analysis of residue-residue interactions at the interface. In particular, taking into account a antibody-antigen complex (such as the pdb code: 3HFM), we would calculate:
@@ -326,5 +325,4 @@ Analysis of residue-residue interactions at the interface. In particular, taking
 -   An histogram of all $C_{\alpha}-C_{\alpha}$ distances, just considering the intermolecular interactions. For this analysis we consider a contact between two residues only if the distance between their $C_{\alpha}$ atoms is less than $12 Å$.
 
 -   Calculate the histogram of all interatomic distances increasing step by step the average hydrophobicity according to the Kyte Doolittle hydrophobicity scale.
-
 :::
